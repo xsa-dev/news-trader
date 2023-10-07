@@ -12,6 +12,14 @@ const Auth = (props) => {
     const [password, setPassword] = useState('');
     const [isBot, setIsBot] = useState(true);
 
+
+    async function signInWithEmail() {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: login,
+          password: password,
+        })
+      }
+
     const handleLogin = async () => {
         // Replace this with your actual authentication logic
         if (login === '' && password === '') {

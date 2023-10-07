@@ -5,10 +5,15 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient(
+    "https://yfsyfoytsfpvnozqbnsm.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlmc3lmb3l0c2Zwdm5venFibnNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY2Mzc0MTksImV4cCI6MjAxMjIxMzQxOX0.Q5Xbh8H4GFw-r3K7B3xLCFkcf7TUXPK3605SJpQLclA");
+
+
 export default function Avatar({ profile, supabase }) {
     const [connected, setConnected] = useState(false);
-
-    console.log(profile, supabase)
 
     const handleConnect = () => {
         setConnected(true)
@@ -16,6 +21,8 @@ export default function Avatar({ profile, supabase }) {
 
     const handleLogout = () => {
 
+            const { error } = supabase.auth.signOut()
+        
             localStorage.removeItem('sb-yfsyfoytsfpvnozqbnsm-auth-token');
             window.location.href = '/';
         
