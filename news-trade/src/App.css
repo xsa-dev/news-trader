@@ -1,0 +1,9 @@
+.center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 80vh !important;
+    width: 100% !important;
+  }
+  
+  
