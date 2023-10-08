@@ -4,17 +4,35 @@ Trading based on sentiment analysis. The system fetches news for analysis, retri
 ## Install
 Installation and Setup: Provide detailed instructions for installing and running the frontend, agents, describe the structure, and the web3 smart contract.
 
+## Blockchain
+1. Installation
+```
+cd blockchain
+npm install
+```
+2. compile smartcontract
+```
+npx hardhat compile
+```
+3. start local blockchain
+```
+npx hardhat node 
+```
+
+
 ## Frontend
 The frontend is located in the news-trade folder. It consists of a React application connected to the database via REST and provides real-time mechanisms (from the database to the frontend). It is recommended to use Node.js version > 15.
 
 1. Installation: 
 ```
-yarn
+cd web
+npm install
 ```
 2. Running:
 ```
-yarn run dev
+npm start
 ```
+Also you need specify `contractAddress` in WalletCard.js
 
 ## Backend
 1) Database
