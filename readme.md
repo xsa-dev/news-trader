@@ -53,8 +53,13 @@ Additional Notes:
 
 Current versions as of today. If you have any questions or uncertainties, please write them in the Issues section.
 
-Project Structure: Describe the structure of your project, including the location of main files and folders.
-## Project files:
+## Project Structure: Describe the structure of your project, including the location of main files and folders.
+
+### Database:
+![database](docs/imgs/database.png)
+
+
+### Project files:
 The files are located in a single subfolder, with the remaining parts grouped inside.
 
 ```bash
@@ -82,13 +87,22 @@ The files are located in a single subfolder, with the remaining parts grouped in
 └── readme.md
 ```
 
-### ...
-Usage Examples: Provide code samples or requests to demonstrate the functionality of your project.
+![schema](docs/imgs/schema.svg)
 
-Configuration: If your project requires configuration, describe the necessary steps.
+## Usage Examples:
+Registered, paid for the subscription, connected the exchange, and the agent executes buy and sell orders. Turning off the signals doesn't stop active deductions. When turned back on, signals resume.
 
-Contributing to the Project: If you have a team or want other developers to contribute, describe the collaboration process and contribution guidelines.
+## Configuration
+1. Fill in the .env file.
+2. Parameters required for the service are intuitively understandable.
 
-License: Specify information about your project's license.
+## Certainly, you can create issues and everything else.
+Welcome!
 
-Contact Information: Provide contact details for reaching you or your team for questions and feedback.
+## LICENCE
+```
+      GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+```
+Developers: 
+- [Aleksey Savin](https://alekseysavin.com), [Alexander Belov](https://baadev.com/)
