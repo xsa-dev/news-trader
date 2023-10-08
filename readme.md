@@ -25,13 +25,13 @@ Additional Notes:
 - Vector storages are disabled (with plans for future development).
 
 ## Agents
-Агенты предоставлены в папке agents и представляют собой маленькие python-программы автономно выполняемые и несущие за собой небольшую пользу.
+Agents are provided in the "agents" folder and are small Python programs that run autonomously and provide some utility.
 
-### Functional-agents:
-- agents.news - парсинг новостей и актуализация списка новостей в базе данных
-- agents.prices - цены на используемые в новостях криптовалюты (а если быть точнее то все вероятные пары)
-- agents.sentiment - разбор новостей на позитивную, негативную, нейтральную - актуализацю в БД (в разработке)
-- agents.trade - прокси-агент по созданию сделок на криптоборже (в разработке)
+### Functional Agents:
+- agents.news - news parsing and updating the list of news in the database.
+- agents.prices - prices of cryptocurrencies used in the news (or to be more precise, all possible pairs).
+- agents.sentiment - sentiment analysis of news as positive, negative, or neutral - updating in the database (under development).
+- agents.trade - proxy agent for creating trades on cryptocurrency exchanges (under development).
 
 ## Technolics & Services
 ### Coding
@@ -65,8 +65,8 @@ The files are located in a single subfolder, with the remaining parts grouped in
 ```bash
 .
 ├── agents
-│   ├── langchain <-- linc to repository
-│   ├── news <-- news_functions
+│   ├── langchain
+│   ├── news
 │   │   ├── ... .py
 │   ├── prices
 │   │   └── agent.py
