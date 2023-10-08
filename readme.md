@@ -53,7 +53,7 @@ Agents are provided in the "agents" folder and are small Python programs that ru
 
 Current versions as of today. If you have any questions or uncertainties, please write them in the Issues section.
 
-## Project Structure: Describe the structure of your project, including the location of main files and folders.
+## Project Structure:
 
 ### Database:
 ![database](docs/imgs/database.png)
