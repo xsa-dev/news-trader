@@ -90,7 +90,7 @@ The files are located in a single subfolder, with the remaining parts grouped in
 ![schema](docs/imgs/schema.svg)
 
 ## Usage Examples:
-Registered, paid for the subscription, connected the exchange, and the agent executes buy and sell orders. Turning off the signals doesn't stop active deductions. When turned back on, signals resume.
+Registered, paid for the subscription, connected the exchange, and the agent executes buy and sell orders with stop-loss and take-profit option. Turning off the signals doesn't stop active deductions. When turned back on, signals resume.
 
 ## Configuration
 1. Fill in the .env file.
