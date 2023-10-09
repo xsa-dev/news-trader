@@ -7,7 +7,7 @@ import dotenv
 from supabase import create_client, Client
 import random
 
-# dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
+dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -211,3 +211,7 @@ def get_prices():
 
         index_n += 1
         return ticker
+
+
+if __name__ == '__main__':
+    get_prices()

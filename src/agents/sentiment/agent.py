@@ -5,12 +5,12 @@ import multiprocessing
 import dotenv
 from supabase import create_client, Client
 
-import templates
+import .templates
 
 from PanicEnv import PanicNewsEnv, GptAgent
 import pandas as pd
 
-dotenv.load_dotenv("../../.env")
+# dotenv.load_dotenv("../../.env")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 

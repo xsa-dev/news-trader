@@ -1,0 +1,14 @@
+version: '3'
+services:
+  ns-predictions:
+    image: python:3  # Use an official Python 3 image from Docker Hub
+    container_name: news-sentiments
+    volumes:
+      - ./src:/app  # Mount your application code into the container
+    working_dir: /app  # Set the working directory inside the container
+    command: python -m pip install -r requirements.txt && python scheduler.py  # Replace 'your_app.py' with your Python script
+    ports:
+      - "8080:8080"  # Expose any necessary ports if your app listens on a specific port
+    environment:
+      - APP_ENV=production  # You can set environment variables if needed
+    restart: always  # Restart the container if it stops for any reason

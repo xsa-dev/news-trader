@@ -9,7 +9,7 @@ from tqdm import tqdm  # Import the tqdm function
 
 results = []
 
-dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
+# dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 
 # Define worker_function here, outside any functions
 CRYPTO_PANIC_API = os.getenv("CRYPTO_PANIC_API")
