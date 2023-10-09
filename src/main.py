@@ -3,7 +3,7 @@ import os
 
 def main(context):
     if context.req.method == "GET":
-        return context.res.send("Hello, World!")
+        return context.res.send("Hello, World! How are you?")
 
     
     return context.res.json(
