@@ -5,7 +5,7 @@ from tqdm import tqdm
 import ccxt
 import dotenv
 from supabase import create_client, Client
-import random    
+import random
 
 # dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 
@@ -16,11 +16,8 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 surl: str = SUPABASE_URL
 skey: str = SUPABASE_KEY
 
-
-
 results = []
 
-from time import sleep
 
 TIMEOUT = 60
 
@@ -83,7 +80,6 @@ def scrape_ohlcv(exchange, max_retries, symbol, timeframe, since, limit):
 
 
 def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
-    # upload to supabase
     supabase: Client = create_client(surl, skey)
     supabase.auth.sign_in_with_password(
         {
@@ -112,7 +108,6 @@ def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
             print(E)
             continue
 
-        # if not exist insert
         if len(response.data) == 0:
             try:
                 data = (
@@ -137,21 +132,11 @@ def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
 def scrape_candles_to_csv(
     filename, exchange_id, max_retries, symbol, timeframe, since, limit, **kwargs
 ):
-    # instantiate the exchange by id
-    exchange = getattr(ccxt, exchange_id)(
-        {
-            "enableRateLimit": True,  # required by the Manual
-        }
-    )
-    # convert since from string to milliseconds integer if needed
+    exchange = getattr(ccxt, exchange_id)({"enableRateLimit": True})
     if isinstance(since, str):
         since = exchange.parse8601(since)
-    # preload all markets from the exchange
     exchange.load_markets()
-    # fetch all candles
     ohlcv = scrape_ohlcv(exchange, max_retries, symbol, timeframe, since, limit)
-    # save them to csv file
-    # write_to_csv(filename, exchange, ohlcv)
 
     supabase: Client = create_client(surl, skey)
     supabase.auth.sign_in_with_password(
@@ -160,7 +145,6 @@ def scrape_candles_to_csv(
             "password": os.getenv("SUPABASE_PASSWORD"),
         }
     )
-
     upload_to_supabase(
         prices=ohlcv, platform=exchange_id, token=symbol, timeframe=timeframe
     )
@@ -181,11 +165,8 @@ def scrape_candles_to_csv(
 
 def get_date_one_month_ago():
     today = datetime.now()
-
     one_month_ago = today - timedelta(days=1)
-
     formatted_date = one_month_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
-
     return formatted_date
 
 
@@ -216,32 +197,22 @@ def all_used_bases():
 
 def get_prices():
     date_one_month_ago = get_date_one_month_ago()
-    print(date_one_month_ago)
     used_markets = all_used_bases()
-    print(len(used_markets))
-
-    # Initialize the exchange object (e.g., Binance)
     exchange = ccxt.binance()
     markets = exchange.fetch_markets()
-
-    # Filter markets where the base currency matches
     v = []
     for used_market in used_markets:
         v.append([market for market in markets if market["base"] == used_market])
 
     index_n = 1
-    
-    
-    
 
     market = random.choice(v)
 
     ignoring = []
     for i in [market]:
-
         datas = i
         get_random_elem = random.choice(datas)
-        
+
         exchange = "binance"
         ticker = get_random_elem.get("symbol")
         pair = ticker.split("/")
@@ -250,7 +221,6 @@ def get_prices():
                 continue
 
         if ticker in ignoring:
-
             continue
 
         timeframe = "15m"
@@ -266,6 +236,6 @@ def get_prices():
             )
         except Exception as E:
             pass
-            
+
         index_n += 1
         break
