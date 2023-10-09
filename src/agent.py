@@ -1,9 +1,11 @@
 import os
 from datetime import datetime, timedelta
+from tqdm import tqdm
 
 import ccxt
 import dotenv
 from supabase import create_client, Client
+import random    
 
 # dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 
@@ -14,7 +16,6 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 surl: str = SUPABASE_URL
 skey: str = SUPABASE_KEY
 
-from tqdm import tqdm
 
 
 results = []
@@ -236,7 +237,7 @@ def get_prices():
 
     index_n = 1
     
-    import random    
+    
     
 
     market = random.choice(v)
