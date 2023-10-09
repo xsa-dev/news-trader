@@ -156,9 +156,7 @@ def all_used_bases():
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-
-if __name__ == '__main__':
-
+def get_prices():
     date_one_month_ago = get_date_one_month_ago()
     print(date_one_month_ago)
     used_markets = all_used_bases()
@@ -176,8 +174,11 @@ if __name__ == '__main__':
     index_n = 1
 
 
-    ignoring = ['ETH/TUSD', 'ETH/PAX', 'BTC/USDT', 'ETH/BTC', 'ETH/USDT', 'ETH/USDC', 'ETH/BUSD', 'PAX']
+    ignoring = []
     for i in tqdm(v):
+        import random
+        [i] = random.choice(i)
+        
         for j in tqdm(i):
             print(index_n)            
 
@@ -210,7 +211,11 @@ if __name__ == '__main__':
                 print(E)
             print(file, index_n)
             index_n += 1
-            sleep(60)
+
+
+if __name__ == '__main__':
+    get_prices()
+            
 
 
 
