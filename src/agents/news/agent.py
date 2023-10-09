@@ -107,7 +107,7 @@ async def upload_news(news: list):
     # print(news)
 
 
-async def main():
+async def main_local():
     url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
     headers = {"Content-Type": "application/json"}
 
@@ -116,5 +116,5 @@ async def main():
     supabase.auth.sign_out()
 
 
-if __name__ == "__main__":
+def main(context):
     asyncio.run(main())
