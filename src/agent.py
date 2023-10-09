@@ -27,15 +27,6 @@ def retry_fetch_ohlcv(exchange, max_retries, symbol, timeframe, since, limit):
     try:
         num_retries += 1
         ohlcv = exchange.fetch_ohlcv(symbol, timeframe, since, limit)
-        print(
-            "Fetched",
-            len(ohlcv),
-            symbol,
-            "candles from",
-            exchange.iso8601(ohlcv[0][0]),
-            "to",
-            exchange.iso8601(ohlcv[-1][0]),
-        )
         return ohlcv
     except Exception:
         if num_retries > max_retries:
@@ -66,14 +57,6 @@ def scrape_ohlcv(exchange, max_retries, symbol, timeframe, since, limit):
             break
         earliest_timestamp = ohlcv[0][0]
         all_ohlcv = ohlcv + all_ohlcv
-        print(
-            len(all_ohlcv),
-            symbol,
-            "candles in total from",
-            exchange.iso8601(all_ohlcv[0][0]),
-            "to",
-            exchange.iso8601(all_ohlcv[-1][0]),
-        )
         if fetch_since < since:
             break
     return all_ohlcv
@@ -105,7 +88,6 @@ def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
                 .execute()
             )
         except Exception as E:
-            print(E)
             continue
 
         if len(response.data) == 0:
@@ -147,16 +129,6 @@ def scrape_candles_to_csv(
     )
     upload_to_supabase(
         prices=ohlcv, platform=exchange_id, token=symbol, timeframe=timeframe
-    )
-    print(
-        "Saved",
-        len(ohlcv),
-        "candles from",
-        exchange.iso8601(ohlcv[0][0]),
-        "to",
-        exchange.iso8601(ohlcv[-1][0]),
-        "to",
-        filename,
     )
 
     supabase.auth.sign_out()
@@ -238,4 +210,4 @@ def get_prices():
             pass
 
         index_n += 1
-        break
+        return ticker

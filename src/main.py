@@ -6,8 +6,8 @@ from .agent import get_prices
 
 def main(context):
     context.log('start get_prices()')
-    get_prices()
-    context.log('done!')
+    symbol = get_prices()
+    context.log(f'done: {symbol}!')
     
     if context.req.method == "GET":        
         return context.res.send("Hello, World! How are you?")
