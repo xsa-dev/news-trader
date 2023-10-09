@@ -18,3 +18,5 @@ def main(context):
             "getInspired": "https://builtwith.appwrite.io",
         }
     )
+    
+main()
