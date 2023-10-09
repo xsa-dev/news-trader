@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from tqdm import tqdm
+
 
 import ccxt
 import dotenv
@@ -88,7 +88,7 @@ def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
         }
     )
 
-    for result in tqdm(prices):
+    for result in prices:
         candle_id = result[0]
         try:
             response = (
