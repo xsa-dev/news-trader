@@ -117,4 +117,4 @@ async def main_local():
 
 
 def main(context):
-    asyncio.run(main())
+    asyncio.run(main_local())
