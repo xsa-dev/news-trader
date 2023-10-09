@@ -1,0 +1,9 @@
+langchain
+python-dotenv
+supabase
+aiohttp
+ccxt
+fastapi
+tqdm
+appwrite
+apscheduler
