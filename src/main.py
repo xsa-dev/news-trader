@@ -3,6 +3,9 @@ import os
 
 def main(context):
     if context.req.method == "GET":
+        from agents.prices.agent import get_prices
+        get_prices()
+        
         return context.res.send("Hello, World! How are you?")
 
     
