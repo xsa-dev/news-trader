@@ -113,8 +113,40 @@ async def main_local():
 
     await fetch_data(url, headers, payload=None)
     await upload_news(results)
+
+
+
+def amain():
+    def load_news():
+        import requests
+        
+        url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
+        headers = {"Content-Type": "application/json"}
+        response = requests.get(url, headers=headers)
+    
+        if response.status_code == 200:
+            # Successful request
+            data = response.json()
+
+            if "next" in data and data.get("next") is not None:
+                results.append(data["results"])
+                load_news(data["next"], headers)
+
+        else:
+            # Error handling
+            print(f"Request failed with status code {response.status_code}")
+            # print(response.text)    
+
+    upload_news(results)  
     supabase.auth.sign_out()
 
 
+
 def main(context):
-    asyncio.run(main_local())
+    # asyncio.run(main_local())
+    context.log('start news parsing')
+    try:
+        amain()
+    except Exception as E:
+        context.error(E)
+    context.log('end news parsing')
