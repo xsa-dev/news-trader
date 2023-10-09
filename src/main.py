@@ -1,12 +1,16 @@
 from appwrite.client import Client
 import os
+from agent import get_prices
 
+
+def local():
+    get_prices()
 
 def main(context):
+    
     if context.req.method == "GET":        
         return context.res.send("Hello, World! How are you?")
 
-    
     return context.res.json(
         {
             "motto": "Build Fast. Scale Big. All in One Place.",
@@ -15,3 +19,7 @@ def main(context):
             "getInspired": "https://builtwith.appwrite.io",
         }
     )
+    
+    
+if __name__ == '__main__':
+    local()

@@ -5,7 +5,7 @@ import ccxt
 import dotenv
 from supabase import create_client, Client
 
-# dotenv.load_dotenv('../.env')
+dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -219,9 +219,6 @@ def all_used_bases():
     return uniq_codes
 
 
-from apscheduler.schedulers.background import BackgroundScheduler
-
-
 def get_prices():
     date_one_month_ago = get_date_one_month_ago()
     print(date_one_month_ago)
@@ -242,8 +239,6 @@ def get_prices():
     ignoring = []
     for i in tqdm(v):
         import random
-
-        [i] = random.choice(i)
 
         for j in tqdm(i):
             print(index_n)
@@ -276,31 +271,8 @@ def get_prices():
                 print(E)
             print(file, index_n)
             index_n += 1
+            break
 
 
 if __name__ == "__main__":
     get_prices()
-
-
-# from apscheduler.schedulers.background import BackgroundScheduler
-
-# # Define a function that you want to schedule
-# def my_job():
-#     print("Scheduled job executed!")
-
-# # Create a scheduler instance
-# scheduler = BackgroundScheduler()
-
-# # Add your job to the scheduler with a specified interval (e.g., every 10 seconds)
-# scheduler.add_job(my_job, 'interval', seconds=10)
-
-# # Start the scheduler
-# scheduler.start()
-
-# try:
-#     # Keep your main thread running to allow the scheduler to continue working
-#     while True:
-#         pass
-# except (KeyboardInterrupt, SystemExit):
-#     # Gracefully shut down the scheduler when you interrupt the program
-#     scheduler.shutdown()
