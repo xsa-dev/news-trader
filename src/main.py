@@ -1,6 +1,6 @@
 from appwrite.client import Client
 import os
-from agent import get_prices
+from .agent import get_prices
 
 
 def local():
