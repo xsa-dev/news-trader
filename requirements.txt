@@ -14,7 +14,7 @@ numpy~=1.26.0
 PyYAML~=6.0.1
 pandas~=2.1.1
 uvicorn~=0.22.0
-fastapi~=0.98.0
+fastapi
 openai~=0.27.10
 docarray~=0.21.1
 duckdb~=0.9.0
