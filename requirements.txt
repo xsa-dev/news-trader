@@ -6,3 +6,4 @@ ccxt
 fastapi
 tqdm
 appwrite
+apscheduler

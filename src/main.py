@@ -1,9 +1,11 @@
 from appwrite.client import Client
 import os
+from agents.prices.agent import get_prices
+
 
 def main(context):
     if context.req.method == "GET":
-        from agents.prices.agent import get_prices
+        
         get_prices()
         
         return context.res.send("Hello, World! How are you?")
