@@ -7,3 +7,5 @@ fastapi
 tqdm
 appwrite
 apscheduler
+bs4
+fake_useragent
