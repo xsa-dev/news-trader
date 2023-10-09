@@ -1,4 +1,4 @@
-import asyncio
+
 import httpx
 import dotenv
 import os
@@ -32,7 +32,6 @@ supabase.auth.sign_in_with_password(
 )
 
 results = []
-
 from parse_subcontent import parse_more_data
 
 
