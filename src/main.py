@@ -1,6 +1,7 @@
 from appwrite.client import Client
 import os
 
+
 # This is your Appwrite function
 # It's executed each time we get a request
 def main(context):
@@ -12,7 +13,8 @@ def main(context):
     #     .set_key(os.environ["APPWRITE_API_KEY"])
     # )
     from agents.prices.agent import get_prices
-    get_prices()    
+
+    get_prices()
 
     # You can log messages to the console
     context.log("Hello, Logs!")
@@ -25,6 +27,7 @@ def main(context):
         # Send a response with the res object helpers
         # `ctx.res.send()` dispatches a string back to the client
         from agents.prices.agent import get_prices
+
         get_prices()
         return context.res.send("Hello, World!")
 

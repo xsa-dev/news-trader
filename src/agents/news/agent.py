@@ -8,9 +8,9 @@ from tqdm import tqdm  # Import the tqdm function
 
 
 # dotenv.load_dotenv('../.env')
-CRYPTO_PANIC_API = os.getenv('CRYPTO_PANIC_API')
-SUPABASE_URL = os.getenv('SUPABASE_URL')
-SUPABASE_KEY = os.getenv('SUPABASE_KEY')
+CRYPTO_PANIC_API = os.getenv("CRYPTO_PANIC_API")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 # supabase
 surl: str = SUPABASE_URL
@@ -18,7 +18,8 @@ skey: str = SUPABASE_KEY
 
 supabase: Client = create_client(surl, skey)
 supabase.auth.sign_in_with_password(
-    {"email": os.getenv('SUPABASE_ACCOUNT'), "password": os.getenv('SUPABASE_PASSWORD')})
+    {"email": os.getenv("SUPABASE_ACCOUNT"), "password": os.getenv("SUPABASE_PASSWORD")}
+)
 
 results = []
 
@@ -28,27 +29,41 @@ from parse_subcontent import parse_more_data
 # Define worker_function here, outside any functions
 def supabase_worker(arg):
     for result in tqdm(arg):
-        if 'id' not in result:
+        if "id" not in result:
             continue
-        
-        sdbobj = supabase.table('news').select("*").eq('id', result.get('id')).execute()
+
+        sdbobj = supabase.table("news").select("*").eq("id", result.get("id")).execute()
         if len(sdbobj.data) > 0:
-            if 'summary' in sdbobj.data[0].get('obj'):
-                result['summary'] = sdbobj.data[0]['obj']['summary']
-                data = supabase.table('news').update({'obj': result, 'source': 'cp'}).eq('id', result.get('id')).execute()
-                assert len(data.data) > 0    
-                continue         
-            else:
-                sdbobj.data[0]['obj']['summary'] = parse_more_data(result)
-                data = supabase.table('news').update({'obj': sdbobj.data[0]['obj'], 'source': 'cp'}).eq('id', result.get('id')).execute()
+            if "summary" in sdbobj.data[0].get("obj"):
+                result["summary"] = sdbobj.data[0]["obj"]["summary"]
+                data = (
+                    supabase.table("news")
+                    .update({"obj": result, "source": "cp"})
+                    .eq("id", result.get("id"))
+                    .execute()
+                )
                 assert len(data.data) > 0
                 continue
-            
+            else:
+                sdbobj.data[0]["obj"]["summary"] = parse_more_data(result)
+                data = (
+                    supabase.table("news")
+                    .update({"obj": sdbobj.data[0]["obj"], "source": "cp"})
+                    .eq("id", result.get("id"))
+                    .execute()
+                )
+                assert len(data.data) > 0
+                continue
+
         else:
             try:
-                result['summary'] = parse_more_data(result)
-                news_id = result.get('id')
-                data = supabase.table('news').insert({'id': news_id, 'obj': result, 'source': 'cp'}).execute()
+                result["summary"] = parse_more_data(result)
+                news_id = result.get("id")
+                data = (
+                    supabase.table("news")
+                    .insert({"id": news_id, "obj": result, "source": "cp"})
+                    .execute()
+                )
                 assert len(data.data) > 0
                 continue
             except Exception as e:
@@ -65,9 +80,9 @@ async def fetch_data(url, headers, payload):
             # Successful request
             data = response.json()
 
-            if 'next' in data and data.get('next') is not None:
-                results.append(data['results'])
-                await fetch_data(data['next'], headers, payload)
+            if "next" in data and data.get("next") is not None:
+                results.append(data["results"])
+                await fetch_data(data["next"], headers, payload)
 
         else:
             # Error handling
@@ -94,9 +109,7 @@ async def upload_news(news: list):
 
 async def main():
     url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
-    headers = {
-        "Content-Type": "application/json"
-    }
+    headers = {"Content-Type": "application/json"}
 
     await fetch_data(url, headers, payload=None)
     await upload_news(results)
@@ -105,4 +118,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

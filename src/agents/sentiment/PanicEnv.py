@@ -6,7 +6,11 @@ from tqdm.notebook import tqdm
 from langchain import LLMChain
 from langchain.llms.base import LLM
 
-from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain.prompts import (
+    PromptTemplate,
+    ChatPromptTemplate,
+    HumanMessagePromptTemplate,
+)
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain.output_parsers import PydanticOutputParser
@@ -29,7 +33,9 @@ class PanicNewsEnv(gym.Env):
 
     def read_file(self, stock_name):
         # sentences
-        sentence_path = f"/workspaces/FinGPT/stocknet-dataset/tweet/preprocessed/{stock_name}/"
+        sentence_path = (
+            f"/workspaces/FinGPT/stocknet-dataset/tweet/preprocessed/{stock_name}/"
+        )
         self.tweets_df = pd.DataFrame()
         print("missing (empty means not missing):", end=" ")
         for date in pd.date_range(self.start_date, self.end_date):
@@ -67,7 +73,9 @@ class PanicNewsEnv(gym.Env):
         self.today_cash = self.init_cash
         self.today_hold = self.init_hold
         self.terminal = False
-        self.asset_memory = [self.init_hold * self.today_price[self.cal_on].item() + self.today_cash]
+        self.asset_memory = [
+            self.init_hold * self.today_price[self.cal_on].item() + self.today_cash
+        ]
         self.hold_memory = [self.init_hold]
         self.cash_memory = [self.init_cash]
         self.reward_momory = [0]
@@ -104,7 +112,6 @@ class PanicNewsEnv(gym.Env):
                     avaliable_volumn = self.today_cash / next_price
                     self.today_hold += avaliable_volumn
                     self.today_cash = 0
-
 
             elif action < 0:
                 today_hold = self.today_hold - self.trade_volume
@@ -154,7 +161,13 @@ class GptAgent:
     def __call__(self, obs):
         self.score_list = [self.get_sentiment(o) for o in obs]
         self.score_list_mean = np.mean(self.score_list)
-        return 1 if self.score_list_mean > self.buy_threshold else -1 if self.score_list_mean < self.sell_threshold else 0
+        return (
+            1
+            if self.score_list_mean > self.buy_threshold
+            else -1
+            if self.score_list_mean < self.sell_threshold
+            else 0
+        )
 
     def get_sentiment(self, sentence):
         # TODO: switch case to yandexgpt2
@@ -162,12 +175,12 @@ class GptAgent:
             time.sleep(1)
             response = openai.Completion.create(
                 model=self.model_name,
-                prompt=f"Decide whether a sentence's sentiment is positive, neutral, or negative.\n\nSentence: \"{sentence}\"\nSentiment: ",
+                prompt=f'Decide whether a sentence\'s sentiment is positive, neutral, or negative.\n\nSentence: "{sentence}"\nSentiment: ',
                 temperature=0,
                 max_tokens=60,
                 top_p=1,
                 frequency_penalty=0.5,
-                presence_penalty=0
+                presence_penalty=0,
             )
             response = response["choices"][0]["text"]
         elif self.source == "local":
