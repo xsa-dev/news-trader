@@ -17,10 +17,10 @@ def main(context):
     get_prices()
 
     # You can log messages to the console
-    context.log("Hello, Logs!")
+    # context.log("Hello, Logs!")
 
     # If something goes wrong, log an error
-    context.error("Hello, Errors!")
+    # context.error("Hello, Errors!")
 
     # The `ctx.req` object contains the request data
     if context.req.method == "GET":
@@ -29,7 +29,7 @@ def main(context):
         from agents.prices.agent import get_prices
 
         get_prices()
-        return context.res.send("Hello, World!")
+        # return context.res.send("Hello, World!")
 
     # `ctx.res.json()` is a handy helper for sending JSON
     return context.res.json(
