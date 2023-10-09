@@ -137,15 +137,9 @@ async def main_local():
 
 def amain():
     import requests
-
     global results
-
-
-
-
     url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
     headers = {"Content-Type": "application/json"}
-    #
 
     def load_news(url, headers, payload=None):
         response = requests.get(url, headers=headers, json=payload)
@@ -161,13 +155,13 @@ def amain():
             # Error handling
             print(f"Request failed with status code {response.status_code}")
             # print(response.text)
+    load_news(url, headers)
 
     def upload_news(news: list):
         for new in tqdm(news):
-            supabase_worker(new)
-
-    load_news(url, headers)
+            supabase_worker(new)    
     upload_news(results)
+    
     supabase.auth.sign_out()
 
 
