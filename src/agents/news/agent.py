@@ -6,6 +6,16 @@ import multiprocessing
 from supabase import create_client, Client
 from tqdm import tqdm  # Import the tqdm function
 
+import logging
+import sys
+
+supabase_logger = logging.getLogger('supabase')
+rich_logger = logging.getLogger('rich')
+
+# Method 2
+supabase_logger.disabled = True
+rich_logger.disabled = True
+
 
 # dotenv.load_dotenv('../.env')
 CRYPTO_PANIC_API = os.getenv("CRYPTO_PANIC_API")
@@ -143,7 +153,6 @@ def amain():
 
 
 def main(context):
-    # asyncio.run(main_local())
     context.log('start news parsing')
     try:
         amain()
