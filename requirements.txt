@@ -1,4 +1,4 @@
-langchain[all]~=0.0.310
+langchain
 
 
 httpx~=0.24.1
