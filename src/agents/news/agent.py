@@ -1,4 +1,4 @@
-
+import asyncio
 import httpx
 import dotenv
 import os
@@ -6,18 +6,8 @@ import multiprocessing
 from supabase import create_client, Client
 from tqdm import tqdm  # Import the tqdm function
 
-import logging
-import sys
 
-supabase_logger = logging.getLogger('supabase')
-rich_logger = logging.getLogger('rich')
-
-# Method 2
-supabase_logger.disabled = True
-rich_logger.disabled = True
-
-
-# dotenv.load_dotenv('../.env')
+dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
 CRYPTO_PANIC_API = os.getenv("CRYPTO_PANIC_API")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -32,6 +22,7 @@ supabase.auth.sign_in_with_password(
 )
 
 results = []
+
 from parse_subcontent import parse_more_data
 
 
@@ -99,7 +90,7 @@ async def fetch_data(url, headers, payload):
             # print(response.text)
 
 
-async def upload_news(news: list):
+def upload_news(news: list):
     for new in tqdm(news):
         supabase_worker(new)
 
@@ -126,13 +117,30 @@ async def main_local():
 
 
 def amain():
-    def load_news():
-        import requests
-        
-        url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
-        headers = {"Content-Type": "application/json"}
-        response = requests.get(url, headers=headers)
+    import requests
+    global results
     
+    # dotenv.load_dotenv('/Users/xsa-osx/Codes/news-trader/.env')
+    
+    CRYPTO_PANIC_API = os.getenv("CRYPTO_PANIC_API")
+    SUPABASE_URL = os.getenv("SUPABASE_URL")
+    SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+    # supabase
+    surl: str = SUPABASE_URL
+    skey: str = SUPABASE_KEY
+
+    supabase: Client = create_client(surl, skey)
+    supabase.auth.sign_in_with_password(
+        {"email": os.getenv("SUPABASE_ACCOUNT"), "password": os.getenv("SUPABASE_PASSWORD")}
+    )    
+        
+    url = f"https://cryptopanic.com/api/v1/posts/?auth_token={CRYPTO_PANIC_API}&filter=rising&public=true"
+    headers = {"Content-Type": "application/json"}
+    #    
+    
+    def load_news(url, headers, payload=None):
+        response = requests.get(url, headers=headers, json=payload) 
         if response.status_code == 200:
             # Successful request
             data = response.json()
@@ -146,15 +154,15 @@ def amain():
             print(f"Request failed with status code {response.status_code}")
             # print(response.text)    
 
+    load_news(url, headers)
     upload_news(results)  
     supabase.auth.sign_out()
 
 
 
-def main(context):
-    context.log('start news parsing')
-    try:
-        amain()
-    except Exception as E:
-        context.error(E)
-    context.log('end news parsing')
+def main(context=None):
+    amain()
+
+
+if __name__ == "__main__":
+    main()
