@@ -7,7 +7,7 @@ from supabase import create_client, Client
 from tqdm import tqdm  # Import the tqdm function
 
 
-dotenv.load_dotenv('../.env')
+# dotenv.load_dotenv('../.env')
 CRYPTO_PANIC_API = os.getenv('CRYPTO_PANIC_API')
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')

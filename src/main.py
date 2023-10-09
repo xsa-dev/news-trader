@@ -1,18 +1,18 @@
 from appwrite.client import Client
 import os
 
-
 # This is your Appwrite function
 # It's executed each time we get a request
 def main(context):
     # Why not try the Appwrite SDK?
-    #
     # client = (
     #     Client()
     #     .set_endpoint("https://cloud.appwrite.io/v1")
     #     .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
     #     .set_key(os.environ["APPWRITE_API_KEY"])
     # )
+    from agents.prices.agent import get_prices
+    get_prices()    
 
     # You can log messages to the console
     context.log("Hello, Logs!")
@@ -25,6 +25,7 @@ def main(context):
         # Send a response with the res object helpers
         # `ctx.res.send()` dispatches a string back to the client
         from agents.prices.agent import get_prices
+        get_prices()
         return context.res.send("Hello, World!")
 
     # `ctx.res.json()` is a handy helper for sending JSON
