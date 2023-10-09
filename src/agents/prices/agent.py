@@ -5,7 +5,7 @@ import ccxt
 import dotenv
 from supabase import create_client, Client
 
-dotenv.load_dotenv('../.env')
+# dotenv.load_dotenv('../.env')
 
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
