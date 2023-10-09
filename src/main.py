@@ -3,11 +3,9 @@ import os
 from .agent import get_prices
 
 
-def local():
-    get_prices()
 
 def main(context):
-    
+    get_prices()
     if context.req.method == "GET":        
         return context.res.send("Hello, World! How are you?")
 
@@ -19,7 +17,3 @@ def main(context):
             "getInspired": "https://builtwith.appwrite.io",
         }
     )
-    
-    
-if __name__ == '__main__':
-    local()

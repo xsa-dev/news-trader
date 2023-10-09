@@ -235,43 +235,53 @@ def get_prices():
         v.append([market for market in markets if market["base"] == used_market])
 
     index_n = 1
+    
+    import random    
+    
+
+    market = random.choice(v)
 
     ignoring = []
-    for i in tqdm(v):
-        import random
+    for i in [market]:
 
-        for j in tqdm(i):
-            print(index_n)
-
-            exchange = "binance"
-            ticker = j.get("symbol")
-            pair = ticker.split("/")
-            for ignored in ignoring:
-                if ignored in pair:
-                    print(ignored, "continue...")
-                    continue
-
-            if ticker in ignoring:
-                print(ticker, "continue...")
+        datas = i
+        get_random_elem = random.choice(datas)
+        
+        exchange = "binance"
+        ticker = get_random_elem.get("symbol")
+        pair = ticker.split("/")
+        for ignored in ignoring:
+            if ignored in pair:
+                print(ignored, "continue...")
                 continue
 
-            print(ticker)
-            timeframe = "15m"
-            try:
-                file = scrape_candles_to_csv(
-                    filename=f'{date_one_month_ago.replace(":", "").replace("/", "")}_{timeframe}_{ticker.replace("/", "")}.csv',
-                    exchange_id=exchange,
-                    max_retries=10,
-                    symbol=ticker,
-                    timeframe=timeframe,
-                    since=date_one_month_ago,
-                    limit=1000,
-                )
-            except Exception as E:
-                print(E)
-            print(file, index_n)
-            index_n += 1
-            break
+        if ticker in ignoring:
+            print(ticker, "continue...")
+            continue
+
+        print(ticker)
+        timeframe = "15m"
+        try:
+            file = scrape_candles_to_csv(
+                filename=f'{date_one_month_ago.replace(":", "").replace("/", "")}_{timeframe}_{ticker.replace("/", "")}.csv',
+                exchange_id=exchange,
+                max_retries=10,
+                symbol=ticker,
+                timeframe=timeframe,
+                since=date_one_month_ago,
+                limit=1000,
+            )
+        except Exception as E:
+            print(E)
+            
+        print(file, index_n)
+        index_n += 1
+        break
+
+        for j in random.choice(i):
+            print(index_n)
+
+            
 
 
 if __name__ == "__main__":
