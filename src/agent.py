@@ -63,7 +63,6 @@ def scrape_ohlcv(exchange, max_retries, symbol, timeframe, since, limit):
         ohlcv = retry_fetch_ohlcv(
             exchange, max_retries, symbol, timeframe, fetch_since, limit
         )
-        # if we have reached the beginning of history
         if ohlcv is None:
             continue
         if ohlcv[0][0] >= earliest_timestamp:
@@ -78,7 +77,6 @@ def scrape_ohlcv(exchange, max_retries, symbol, timeframe, since, limit):
             "to",
             exchange.iso8601(all_ohlcv[-1][0]),
         )
-        # if we have reached the checkpoint
         if fetch_since < since:
             break
     return all_ohlcv
@@ -132,7 +130,7 @@ def upload_to_supabase(prices: list, platform: str, token: str, timeframe: str):
                 )
                 assert len(data.data) > 0
             except Exception as E:
-                print(E)
+                pass
     supabase.auth.sign_out()
 
 
@@ -178,18 +176,14 @@ def scrape_candles_to_csv(
     )
 
     supabase.auth.sign_out()
-
     return filename
 
 
 def get_date_one_month_ago():
-    # Получаем текущую дату
     today = datetime.now()
 
-    # Вычисляем дату на месяц назад
     one_month_ago = today - timedelta(days=1)
 
-    # Форматируем дату в нужный формат
     formatted_date = one_month_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     return formatted_date
@@ -253,14 +247,12 @@ def get_prices():
         pair = ticker.split("/")
         for ignored in ignoring:
             if ignored in pair:
-                print(ignored, "continue...")
                 continue
 
         if ticker in ignoring:
-            print(ticker, "continue...")
+
             continue
 
-        print(ticker)
         timeframe = "15m"
         try:
             file = scrape_candles_to_csv(
@@ -273,17 +265,7 @@ def get_prices():
                 limit=1000,
             )
         except Exception as E:
-            print(E)
+            pass
             
-        print(file, index_n)
         index_n += 1
         break
-
-        for j in random.choice(i):
-            print(index_n)
-
-            
-
-
-if __name__ == "__main__":
-    get_prices()
