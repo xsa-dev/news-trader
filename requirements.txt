@@ -9,7 +9,7 @@ pydantic~=1.10.13
 pytest~=7.4.2
 
 tenacity~=8.2.3
-langsmith~=0.0.43
+
 numpy~=1.26.0
 PyYAML~=6.0.1
 pandas~=2.1.1
